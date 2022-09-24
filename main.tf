@@ -18,6 +18,10 @@ module "github-actions-iam" {
   github_repo      = "aws-config-rule-sandbox"
 }
 
+module "config" {
+  source = "./modules/config"
+}
+
 ############################
 ### Terraform S3 Backend ###
 ############################
