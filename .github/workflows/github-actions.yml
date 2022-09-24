@@ -12,7 +12,7 @@ jobs:
   terraform:
     name: 'TF GitHub Actions'
     runs-on: ubuntu-latest
-    environment: production
+    environment: dev
 
     defaults:
       run:
