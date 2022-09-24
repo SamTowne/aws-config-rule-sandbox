@@ -1,4 +1,3 @@
-#272773485930
 #################
 ### Bootstrap ###
 #################
@@ -19,7 +18,7 @@ terraform {
     bucket         = "aws-config-rule-sandbox-272773485930-terraform-tfstate"
     key            = "terraform.tfstate"
     region         = "us-east-1"
-    dynamodb_table = "$aws-config-rule-sandbox-272773485930-dynamodb-terraform-locking"
+    dynamodb_table = "aws-config-rule-sandbox-272773485930-dynamodb-terraform-locking"
     encrypt        = true
   }
 }
