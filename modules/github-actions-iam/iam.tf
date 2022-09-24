@@ -6,7 +6,7 @@ url = "https://token.actions.githubusercontent.com"
 client_id_list = [
 "sts.amazonaws.com",
 ]
-thumbprint_list = ["6938fd4d98bab03faadb97b34396831e3780aea1"]
+thumbprint_list = ["nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8"]
 }
 data "aws_iam_policy_document" "github" {
 statement {
