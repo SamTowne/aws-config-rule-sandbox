@@ -1,4 +1,7 @@
 name: 'AWS Config Sandbox'
+permissions:
+  id-token: write # required to use OIDC authentication
+  contents: read # required to checkout the code from the repo
 
 on:
   push:
@@ -13,6 +16,7 @@ jobs:
     name: 'TF GitHub Actions'
     runs-on: ubuntu-latest
     environment: production
+    
 
     defaults:
       run:
