@@ -1,4 +1,7 @@
 name: 'AWS Config Sandbox'
+permissions:
+  id-token: write # required to use OIDC authentication
+  contents: read # required to checkout the code from the repo
 
 on:
   push:
@@ -12,7 +15,8 @@ jobs:
   terraform:
     name: 'TF GitHub Actions'
     runs-on: ubuntu-latest
-    environment: dev
+    environment: production
+    
 
     defaults:
       run:
@@ -30,11 +34,9 @@ jobs:
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        # aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }} 
-        # if you have/need it
+        role-to-assume: arn:aws:iam::272773485930:role/aws-config-rule-sandbox-272773485930-github-oidc
         aws-region: us-east-1
+        role-duration-seconds: 900
 
     - name: Terraform Init
       id: init

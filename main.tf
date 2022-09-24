@@ -4,9 +4,22 @@
 
 # Build an S3 bucket and DynamoDB for Terraform state and locking
 module "bootstrap" {
-  source                  = "./modules/bootstrap"
-  tfstate_bucket          = "aws-config-rule-sandbox-272773485930-terraform-tfstate"
-  tf_lock_dynamo_table    = "aws-config-rule-sandbox-272773485930-dynamodb-terraform-locking"
+  source               = "./modules/bootstrap"
+  tfstate_bucket       = "aws-config-rule-sandbox-272773485930-terraform-tfstate"
+  tf_lock_dynamo_table = "aws-config-rule-sandbox-272773485930-dynamodb-terraform-locking"
+}
+
+# Build the IAM needed for github actions CICD
+# **IMPORTANT** Configuring this part incorrectly can compromise your AWS account, don't touch this unless you are comfortable with OIDC and federation concepts.
+module "github-actions-iam" {
+  source           = "./modules/github-actions-iam"
+  project_prefix   = "aws-config-rule-sandbox-272773485930"
+  github_workspace = "SamTowne"
+  github_repo      = "aws-config-rule-sandbox"
+}
+
+module "config" {
+  source = "./modules/config"
 }
 
 ############################
@@ -30,13 +43,13 @@ terraform {
 # Credentials are exported or retrieve from an external store like Hashicorp Vault
 
 provider "aws" {
-  region  = "us-east-1"
+  region = "us-east-1"
 
   default_tags {
-   tags = {
-     Terraform   = "true"
-     Owner       = "aws-config-rule-sandbox"
-     Project     = "aws-config-rule-sandbox"
-   }
- }
+    tags = {
+      Terraform = "true"
+      Owner     = "aws-config-rule-sandbox"
+      Project   = "aws-config-rule-sandbox"
+    }
+  }
 }
