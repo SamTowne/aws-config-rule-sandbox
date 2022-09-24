@@ -1,8 +1,3 @@
-locals {
-  project_name = "aws-config-rule-sandbox"
-  account_id = data.aws_caller_identity.current.account_id
-}
-
 #################
 ### Bootstrap ###
 #################
@@ -10,8 +5,8 @@ locals {
 # Build an S3 bucket and DynamoDB for Terraform state and locking
 module "bootstrap" {
   source                  = "./modules/bootstrap"
-  tfstate_bucket          = "${local.project_name}-${local.account_id}-terraform-tfstate"
-  tf_lock_dynamo_table    = "${local.project_name}-${local.account_id}-dynamodb-terraform-locking"
+  tfstate_bucket          = "aws-config-rule-sandbox-272773485930-terraform-tfstate"
+  tf_lock_dynamo_table    = "aws-config-rule-sandbox-272773485930-dynamodb-terraform-locking"
 }
 
 ############################
@@ -19,13 +14,13 @@ module "bootstrap" {
 ############################
 # This should be commented out for the first terraform apply so that the tfstate bucket and locking table can be built. After the initial apply, uncomment the s3 backend code and run another apply.
 terraform {
-#   backend "s3" {
-#     bucket         = "${local.project_name}-${local.account_id}-terraform-tfstate"
-#     key            = "terraform.tfstate"
-#     region         = "us-east-1"
-#     dynamodb_table = "${local.project_name}-${local.account_id}-dynamodb-terraform-locking"
-#     encrypt        = true
-#   }
+  backend "s3" {
+    bucket         = "aws-config-rule-sandbox-272773485930-terraform-tfstate"
+    key            = "terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "aws-config-rule-sandbox-272773485930-dynamodb-terraform-locking"
+    encrypt        = true
+  }
 }
 
 #################
@@ -40,8 +35,8 @@ provider "aws" {
   default_tags {
    tags = {
      Terraform   = "true"
-     Owner       = "${local.project_name}"
-     Project     = "${local.project_name}"
+     Owner       = "aws-config-rule-sandbox"
+     Project     = "aws-config-rule-sandbox"
    }
  }
 }
