@@ -35,4 +35,10 @@ values = ["repo:${var.github_workspace}/${var.github_repo}:*"]
 resource "aws_iam_role" "github" {
 name = "${var.project_prefix}-github-oidc"
 assume_role_policy = data.aws_iam_policy_document.github.json
+}#arn:aws:iam::aws:policy/AdministratorAccess
+
+resource "aws_iam_policy_attachment" "AdministratorAccess" {
+  name       = "AdministratorAccess"
+  roles      = [aws_iam_role.role.github]
+  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
 }
