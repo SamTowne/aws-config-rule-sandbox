@@ -30,7 +30,7 @@ jobs:
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        role-to-assume: arn:aws:iam::272773485930:aws-config-rule-sandbox-272773485930-github-oidc/
+        role-to-assume: arn:aws:iam::272773485930:role/aws-config-rule-sandbox-272773485930-github-oidc
         aws-region: us-east-1
         role-duration-seconds: 600
 
